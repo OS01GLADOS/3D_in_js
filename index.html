@@ -1,0 +1,96 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+
+<script>
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+    canvas.width = 640;
+    canvas.height = 480;
+    document.body.appendChild(canvas);
+
+    document.onkeydown = getKey;
+    function getKey() {
+        console.log(event.keyCode)
+        switch(event.keyCode) {
+            case 87:
+                moveForward()
+                break;
+            case 83:
+                moveBackward()
+                break;
+            case 65:
+                turnLeft()
+                break;
+            case 68:
+                turnRight()
+                break;
+        } 
+        drawDott()
+    }
+    //drawing
+    function gameLoop(){
+      update();
+      render();
+      canvas.requestAnimationFrame(gameLoop);
+    }
+
+    function update(){
+
+    }
+
+    function render(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawDott()
+    }
+
+    function drawDott(){
+        ctx.moveTo(pos_prev.right, pos_prev.bottom);
+        ctx.lineTo(move_pos.right, move_pos.bottom);
+        ctx.stroke();
+        movePos()
+    }
+
+
+    //moves
+    var move_pos = {
+        bottom:250,
+        right:250
+    }
+    var pos_prev = {
+        bottom:250,
+        right:250
+    }
+
+    function movePos(){
+        pos_prev = Object.assign({}, move_pos);
+    }
+
+    function moveForward(){
+        console.log('move forward')
+        move_pos.bottom -= 5
+    }
+    function moveBackward(){
+        console.log('move backward')
+        move_pos.bottom += 5
+    }
+    function turnLeft(){
+        console.log('turn left')
+        move_pos.right -=5
+    }
+    function turnRight(){
+        console.log('turn right')
+        move_pos.right += 5
+    }
+
+    canvas.requestAnimationFrame(gameLoop);
+</script>
+
+</html>
